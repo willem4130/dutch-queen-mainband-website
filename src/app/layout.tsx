@@ -4,6 +4,8 @@ import "./globals.css";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { getBandProfile } from "@/lib/content-loader";
+import { GoogleAnalytics } from "@/components/GoogleAnalytics";
+import { GoogleTagManager } from "@/components/GoogleTagManager";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -29,7 +31,7 @@ async function generateMetadata(): Promise<Metadata> {
         description: profile.seo?.metaDescription || `Official website of ${profile.name}`,
       },
     };
-  } catch (error) {
+  } catch {
     return {
       title: "Band Website",
       description: "Official band website",
@@ -46,6 +48,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <GoogleAnalytics measurementId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
+        <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID} />
+      </head>
       <body
         className={`${inter.variable} font-sans antialiased bg-black text-white`}
       >
